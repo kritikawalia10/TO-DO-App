@@ -1,0 +1,24 @@
+/* Removed global body margin that caused large top spacing */
+
+.input{
+    line-height: 30px;
+    margin: 10px;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+}
+
+.btn{
+    background-color: rgb(137, 92, 241);
+    line-height: 30px;
+    width: 50px;
+    color: azure;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+.delete{
+    background-color: rgb(250, 78, 78);
+    line-height: 30px;
+    border-radius: 8px;
+    cursor: pointer;
+}

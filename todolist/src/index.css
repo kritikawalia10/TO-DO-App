@@ -1,0 +1,149 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body, #root { height: 100%; }
+
+body { color: #E5E7EB; font-family: Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto; }
+
+:root{
+	--bg-start: #0B1E4B; /* deep navy start */
+	--bg-end: #1E3A8A; /* deep blue end */
+	--navbar: #0F2A5A; /* navbar color */
+	--card-start: #142C5A; /* card gradient start */
+	--card-end: #1B3A6B; /* card gradient end */
+	--primary-start: #C084FC; /* purple */
+	--primary-end: #C084FC; /* purple solid */
+	--accent: #60A5FA; /* soft blue */
+	--text: #F9FAFB; /* primary text */
+	--text-secondary: #A5B4FC; /* secondary text */
+	--border: rgba(255,255,255,0.04);
+}
+
+body { color: var(--text); font-family: Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto; background: linear-gradient(135deg, var(--bg-start), var(--bg-end)); }
+
+/* subtle background layer for depth */
+body::before{ content:''; position:fixed; inset:0; z-index:-1; background: transparent; }
+
+/* neutral glass for light theme */
+.glass { background: linear-gradient(145deg, var(--card-start), var(--card-end)); border: 1px solid var(--border); box-shadow: 0 10px 30px rgba(0,0,0,0.4); border-radius: 16px; }
+
+/* stronger shadows and rounded corners */
+.shadow-lg { box-shadow: 0 12px 30px rgba(0,0,0,0.45); }
+
+/* utility tweaks */
+.container { max-width: 1200px; margin: 0 auto; padding: 0 1rem; }
+
+/* Ensure form controls are readable on dark glass backgrounds */
+select, select option, textarea, input {
+	color: rgba(255,255,255,0.95);
+}
+
+select {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	background-color: rgba(255,255,255,0.04);
+	border: 1px solid rgba(255,255,255,0.06);
+}
+
+/* utility tweaks */
+.container { max-width: 1200px; margin: 0 auto; padding: 0 1rem; }
+
+.btn-gradient { background: linear-gradient(90deg,var(--primary-start),var(--primary-end)); }
+
+/* Button utilities */
+.btn { display: inline-flex; align-items: center; justify-content: center; padding: 0.45rem 0.85rem; border-radius: 0.5rem; font-weight: 600; white-space: nowrap; position: relative; z-index: 1; }
+.btn { min-width: 72px; }
+
+/* Ensure spacing between adjacent buttons even if utility gap fails */
+.flex .btn + .btn { margin-left: 0.75rem; }
+
+/* Inputs inside white containers (forms) should be dark for readability) */
+.bg-white input, .bg-white textarea, .bg-white select, .bg-white .form-control {
+	color: #111827 !important;
+	background-color: transparent !important;
+	border-color: rgba(0,0,0,0.08) !important;
+}
+.bg-white ::placeholder { color: rgba(31,41,55,0.5) !important; }
+
+/* Make buttons stable size and prevent overflow */
+.btn {
+	display: inline-flex !important;
+	align-items: center;
+	justify-content: center;
+	padding: 0.5rem 1rem !important;
+	min-width: 88px !important;
+	white-space: nowrap !important;
+	flex-shrink: 0 !important;
+	font-size: 0.95rem;
+}
+
+/* More specific header button spacing (dashboard header) */
+.flex.items-center.gap-3 > .btn { margin-left: 0.9rem; }
+.btn-primary { background: linear-gradient(90deg,var(--primary-start),var(--primary-end)); color: var(--text); box-shadow: 0 8px 24px rgba(192,132,252,0.12); border: 1px solid rgba(192,132,252,0.08); }
+.btn-ghost { background: transparent; color: var(--text-secondary); border: 1px solid rgba(255,255,255,0.03); }
+.btn-danger { background: #ef4444; color: white; }
+.card {
+	border-radius: 16px;
+	background: linear-gradient(145deg, var(--card-start), var(--card-end));
+	border: 1px solid var(--border);
+	box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+	transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.card:hover{ transform: translateY(-4px); box-shadow: 0 18px 40px rgba(0,0,0,0.45); }
+
+/* subtle page fade-in */
+.page-fade { animation: pageFade 360ms ease both; }
+@keyframes pageFade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+/* priority tags */
+.tag-done { background: #22C55E; color: #0B1E4B; padding: 0.25rem 0.5rem; border-radius: 999px; font-weight: 600; }
+.tag-pending { background: #F59E0B; color: #0B1E4B; padding: 0.25rem 0.5rem; border-radius: 999px; font-weight: 600; }
+
+/* form controls contrast tweaks */
+input, textarea, select { color: var(--text) !important; background-color: transparent !important; border: 1px solid rgba(255,255,255,0.03); }
+::placeholder { color: rgba(249,250,251,0.5) !important; }
+
+/* select option backgrounds (best-effort across browsers) */
+
+.btn-sm { padding: 0.25rem 0.5rem; font-size: 0.85rem; border-radius: 0.375rem; }
+
+/* Navbar color */
+.navbar { background: var(--navbar); }
+
+.navbar a { color: var(--text-secondary); }
+.navbar .font-bold { color: var(--text); }
+
+/* Profile panel (styles for when shown) */
+.profile-panel { position: absolute; right: 0; top: 56px; width: 320px; border-radius: 12px; background: linear-gradient(180deg, #0F2A5A, #1E3A8A); box-shadow: 0 0 20px rgba(192,132,252,0.3); padding: 1rem; color: var(--text); z-index: 60; }
+
+/* small responsive */
+@media (min-width: 768px) {
+	.container { padding: 0 2rem; }
+}
+
+/* Contrast overrides for dark green theme */
+.text-white, .text-white\/90, .text-white\/80, .text-white\/70, .text-white\/60, .text-white\/50 {
+	color: rgba(230,255,240,0.98) !important;
+}
+
+/* Ensure form controls are readable */
+input, textarea, select {
+	color: rgba(230,255,240,0.98) !important;
+}
+
+::placeholder { color: rgba(200,255,220,0.88) !important; }
+
+.text-gray-700 { color: rgba(220,255,230,0.9) !important; }
+
+/* Ensure select dropdown options are readable on dark backgrounds */
+select, select option {
+	color: rgba(230,255,240,0.98) !important;
+	background-color: rgba(0,10,6,0.95) !important;
+}
+
+/* Some browsers ignore option background; add a fallback border for selects */
+select { border: 1px solid rgba(0,255,150,0.06); }
+
+

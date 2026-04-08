@@ -1,0 +1,43 @@
+{
+  "users": [
+    {
+      "id": "fdb3f715-d1ba-42ab-a30e-07d32445e2b4",
+      "name": "Kritika walia",
+      "email": "kritika.w@kalvium.community",
+      "password": "$2a$10$eS8ix.i/4oUyVC.9ZwHZGef3iKhfVw5FIKhYPRXdnHKMbtiRf3MAm",
+      "role": "user"
+    },
+    {
+      "id": "a9a252e2-cbd7-4666-ac8e-8a63c2c9949b",
+      "name": "K walia",
+      "email": "kritikawalia987@gmail.com",
+      "password": "$2a$10$Ps74RxR4udUe5qDiI0uzZuKTRQBo6vvYLVf32IVcHvh4dRWgIVk.m",
+      "role": "user"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "41ef8547-800b-406b-a8a1-60b01b81f5ce",
+      "title": "code",
+      "description": "for 1 hour",
+      "priority": "medium",
+      "dueDate": "2026-04-07",
+      "createdBy": "fdb3f715-d1ba-42ab-a30e-07d32445e2b4",
+      "createdAt": "2026-04-07T07:15:18.794Z",
+      "updatedAt": "2026-04-07T07:57:09.506Z",
+      "status": "done"
+    },
+    {
+      "id": "8ac4e969-e6fa-409b-912c-e455bfda5bbd",
+      "title": "project",
+      "description": "will complete this week",
+      "priority": "high",
+      "dueDate": "2026-04-15",
+      "createdBy": "fdb3f715-d1ba-42ab-a30e-07d32445e2b4",
+      "createdAt": "2026-04-07T07:50:45.518Z",
+      "updatedAt": "2026-04-07T07:50:54.574Z",
+      "status": "todo"
+    }
+  ],
+  "notifications": []
+}
