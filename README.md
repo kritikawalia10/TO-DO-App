@@ -50,14 +50,5 @@
  npm run dev   # starts Vite dev server
  ```
 
- Notes:
- - The server uses `data/db.json` as its simple datastore. Do not commit secrets to this repo.
- - For production deployment, replace the lowdb adapter with a proper database.
-
- If you want, I can also:
- - Add environment variable instructions and example `.env.sample`
- - Update `package.json` scripts to unify `start`/`dev` commands
-
- Enjoy — open an issue or ask if you want CI or a Docker setup.
 
 
