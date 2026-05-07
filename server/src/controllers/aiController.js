@@ -7,6 +7,7 @@ exports.parseTask = async (req, res, next) => {
     const parsed = await parseTask(text);
     return res.json({ success: true, task: parsed });
   } catch (err) {
+    console.error('AI Controller Error:', err);
     // respond with more info for the frontend to show inline errors when possible
     const payload = { message: err.message || 'AI parse error' };
     if (err.raw) payload.raw = err.raw;
