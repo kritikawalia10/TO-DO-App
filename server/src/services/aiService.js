@@ -3,9 +3,12 @@ const OpenAI = require('openai');
 let client = null;
 if (process.env.OPENAI_API_KEY) {
   try {
-    client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+    const isGroq = process.env.OPENAI_API_KEY.startsWith('gsk_');
+    client = new OpenAI({ 
+      apiKey: process.env.OPENAI_API_KEY,
+      baseURL: isGroq ? 'https://api.groq.com/openai/v1' : undefined
+    });
   } catch (err) {
-    // leave client as null; we'll throw on use
     client = null;
   }
 }
@@ -65,7 +68,10 @@ Respond ONLY with the JSON object. Do not add commentary or markdown.`;
   }
   messages.push({ role: 'user', content: `Input: "${text.replace(/"/g, '\\"')}"\n\nReturn only the JSON object.` });
 
-  const resp1 = await client.chat.completions.create({ model: 'gpt-3.5-turbo', messages, max_tokens: 500, temperature: 0 });
+  const isGroq = process.env.OPENAI_API_KEY?.startsWith('gsk_');
+  const model = isGroq ? 'llama3-8b-8192' : 'gpt-3.5-turbo';
+
+  const resp1 = await client.chat.completions.create({ model, messages, max_tokens: 500, temperature: 0 });
   const content1 = resp1?.choices?.[0]?.message?.content || '';
 
   // try parse and normalize, with one retry using stricter instruction
@@ -74,7 +80,7 @@ Respond ONLY with the JSON object. Do not add commentary or markdown.`;
   catch (err1) {
     const fallbackSystem = 'Output ONLY a single valid JSON object with keys: title, description, dueDate, priority, tags. No commentary.';
     const fallbackMessages = [{ role: 'system', content: fallbackSystem }, { role: 'user', content: `Input: "${text.replace(/"/g, '\\"')}"` }];
-    const resp2 = await client.chat.completions.create({ model: 'gpt-3.5-turbo', messages: fallbackMessages, max_tokens: 500, temperature: 0 });
+    const resp2 = await client.chat.completions.create({ model, messages: fallbackMessages, max_tokens: 500, temperature: 0 });
     const content2 = resp2?.choices?.[0]?.message?.content || '';
     try { parsed = tryParse(content2); }
     catch (err2) {
