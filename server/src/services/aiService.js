@@ -1,10 +1,11 @@
 const OpenAI = require('openai');
 
 let client = null;
+let isGroq = false;
 if (process.env.OPENAI_API_KEY) {
   try {
     const key = process.env.OPENAI_API_KEY.trim();
-    const isGroq = key.startsWith('gsk_');
+    isGroq = key.startsWith('gsk_');
     const baseURL = isGroq ? 'https://api.groq.com/openai/v1' : undefined;
     console.log('AI Service Init - Key Starts With:', key.substring(0, 5), 'isGroq:', isGroq, 'baseURL:', baseURL);
     client = new OpenAI({ 
@@ -74,8 +75,7 @@ Respond ONLY with the JSON object. Do not add commentary or markdown.`;
   }
   messages.push({ role: 'user', content: `Input: "${text.replace(/"/g, '\\"')}"\n\nReturn only the JSON object.` });
 
-  const isGroq = process.env.OPENAI_API_KEY?.startsWith('gsk_');
-  const model = isGroq ? 'llama3-8b-8192' : 'gpt-3.5-turbo';
+  const model = isGroq ? 'llama-3.1-8b-instant' : 'gpt-3.5-turbo';
 
   const resp1 = await client.chat.completions.create({ model, messages, max_tokens: 500, temperature: 0 });
   const content1 = resp1?.choices?.[0]?.message?.content || '';
