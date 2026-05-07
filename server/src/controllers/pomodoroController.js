@@ -5,7 +5,7 @@ exports.createSession = async (req, res, next) => {
     const { taskId, durationSeconds, startedAt, endedAt, phase } = req.body || {};
     if (!req.userId) return res.status(401).json({ message: 'Unauthorized' });
     const payload = { userId: req.userId, taskId: taskId || null, durationSeconds: durationSeconds || 0, startedAt: startedAt || new Date().toISOString(), endedAt: endedAt || new Date().toISOString(), phase: phase || 'work' };
-    if (dbConfig.lowdb) {
+    if (dbConfig.getIsLowDB()) {
       const created = dbConfig.lowdb.createPomodoroSession(payload);
       return res.json(created);
     }
@@ -18,7 +18,7 @@ exports.listSessions = async (req, res, next) => {
   try {
     const userId = req.userId;
     if (!userId) return res.status(401).json({ message: 'Unauthorized' });
-    if (dbConfig.lowdb) {
+    if (dbConfig.getIsLowDB()) {
       const items = dbConfig.lowdb.getPomodoroSessions({ userId });
       return res.json({ sessions: items });
     }

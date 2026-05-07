@@ -11,7 +11,7 @@ const createTask = async (req, res, next) => {
     // If assignedTo, create notification and send email (best-effort)
     if (task.assignedTo) {
       const notifPayload = { user: task.assignedTo, type: 'assigned', message: `You were assigned task: ${task.title}`, data: { taskId: task._id || task.id } };
-      if (dbConfig.lowdb) dbConfig.lowdb.createNotification(notifPayload);
+      if (dbConfig.getIsLowDB()) dbConfig.lowdb.createNotification(notifPayload);
       else {
         const Notification = require('../models/Notification');
         await Notification.create(notifPayload);
@@ -21,7 +21,7 @@ const createTask = async (req, res, next) => {
         const User = require('../models/User');
         let assigned;
         const dbConfig = require('../config/db');
-        if (dbConfig.lowdb) assigned = dbConfig.lowdb.getUserById(task.assignedTo);
+        if (dbConfig.getIsLowDB()) assigned = dbConfig.lowdb.getUserById(task.assignedTo);
         else assigned = await User.findById(task.assignedTo);
         if (assigned && assigned.email) await sendMail({ to: assigned.email, subject: 'New Task Assigned', text: `You were assigned: ${task.title}` });
       } catch (e) { console.warn('Mail error', e); }

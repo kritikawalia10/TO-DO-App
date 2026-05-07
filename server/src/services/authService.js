@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const dbConfig = require('../config/db');
 
 const register = async ({ name, email, password }) => {
-  if (dbConfig.lowdb) {
+  if (dbConfig.getIsLowDB()) {
     const existing = dbConfig.lowdb.getUserByEmail(email);
     if (existing) throw new Error('Email already in use');
     const hashed = await bcrypt.hash(password, 10);
@@ -23,7 +23,7 @@ const register = async ({ name, email, password }) => {
 };
 
 const login = async ({ email, password }) => {
-  if (dbConfig.lowdb) {
+  if (dbConfig.getIsLowDB()) {
     const user = dbConfig.lowdb.getUserByEmail(email);
     if (!user) { const err = new Error('Invalid credentials'); err.status = 401; throw err; }
     const match = await bcrypt.compare(password, user.password);

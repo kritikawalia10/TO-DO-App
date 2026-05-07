@@ -2,7 +2,7 @@ const dbConfig = require('../config/db');
 
 const listNotifications = async (req, res, next) => {
   try {
-    if (dbConfig.lowdb) {
+    if (dbConfig.getIsLowDB()) {
       const notifications = dbConfig.lowdb.getNotifications(req.userId || (req.user && req.user.id));
       return res.json(notifications);
     }
@@ -14,7 +14,7 @@ const listNotifications = async (req, res, next) => {
 
 const markRead = async (req, res, next) => {
   try {
-    if (dbConfig.lowdb) {
+    if (dbConfig.getIsLowDB()) {
       await dbConfig.lowdb.markNotificationRead(req.params.id);
       return res.status(204).send();
     }

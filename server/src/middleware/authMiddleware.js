@@ -8,7 +8,7 @@ const auth = async (req, res, next) => {
   try {
     const payload = jwt.verify(token, process.env.JWT_SECRET || 'secret');
     // support lowdb or mongoose
-    if (dbConfig.lowdb) {
+    if (dbConfig.getIsLowDB()) {
       const user = dbConfig.lowdb.getUserById(payload.id);
       if (!user) return res.status(401).json({ message: 'Invalid token' });
       req.user = user;
