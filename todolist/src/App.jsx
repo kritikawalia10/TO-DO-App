@@ -7,6 +7,9 @@ import Dashboard from './pages/Dashboard';
 import Tasks from './pages/Tasks';
 import TaskDetails from './pages/TaskDetails';
 import Analytics from './pages/Analytics';
+import Pomodoro from './pages/Pomodoro';
+import PomodoroSessions from './pages/PomodoroSessions';
+import AIQuickCreate from './pages/AIQuickCreate';
 import './index.css';
 import './App.css';
 import Navbar from './components/Navbar';
@@ -29,6 +32,9 @@ export default function App() {
             <Route path="/tasks" element={<PrivateRoute><Tasks /></PrivateRoute>} />
             <Route path="/tasks/:id" element={<PrivateRoute><TaskDetails /></PrivateRoute>} />
             <Route path="/analytics" element={<PrivateRoute><Analytics /></PrivateRoute>} />
+            <Route path="/pomodoro" element={<PrivateRoute><Pomodoro /></PrivateRoute>} />
+            <Route path="/pomodoro/sessions" element={<PrivateRoute><PomodoroSessions /></PrivateRoute>} />
+            <Route path="/ai/create" element={<PrivateRoute><AIQuickCreate /></PrivateRoute>} />
           </Routes>
         </div>
       </BrowserRouter>

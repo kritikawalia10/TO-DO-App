@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import client from '../api/client';
 import TaskCard from '../components/TaskCard';
 import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 export default function Tasks() {
   const [tasks, setTasks] = useState([]);
@@ -21,7 +21,13 @@ export default function Tasks() {
     }
   };
 
-  useEffect(()=>{ load(); }, []);
+  const location = useLocation();
+
+  useEffect(()=>{ load();
+    // open new-task modal if navigated with state.openNew === true
+    if (location && location.state && location.state.openNew) setOpen(true);
+  }, // eslint-disable-next-line react-hooks/exhaustive-deps
+  []);
 
   const handleChange = (e) => setForm(f => ({ ...f, [e.target.name]: e.target.value }));
 

@@ -4,6 +4,8 @@ const morgan = require('morgan');
 const authRoutes = require('./routes/authRoutes');
 const taskRoutes = require('./routes/taskRoutes');
 const notificationRoutes = require('./routes/notificationRoutes');
+const aiRoutes = require('./routes/aiRoutes');
+const pomodoroRoutes = require('./routes/pomodoroRoutes');
 const { errorHandler } = require('./middleware/errorHandler');
 
 const app = express();
@@ -14,6 +16,8 @@ app.use(morgan('dev'));
 app.use('/api/auth', authRoutes);
 app.use('/api/tasks', taskRoutes);
 app.use('/api/notifications', notificationRoutes);
+app.use('/api/ai', aiRoutes);
+app.use('/api/pomodoro', pomodoroRoutes);
 
 // Basic root route to avoid 404 on '/'
 app.get('/', (req, res) => res.send('Todo React API')); 

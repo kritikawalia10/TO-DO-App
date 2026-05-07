@@ -62,9 +62,11 @@ export default function Navbar(){
       <div className="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
         <div className="flex items-center gap-4">
           <Link to="/" className="font-bold text-lg" style={{ color: 'var(--text)' }}>TaskManager</Link>
-          <nav className="hidden md:flex items-center gap-4">
+            <nav className="hidden md:flex items-center gap-4">
             <Link to="/tasks" className="text-sm" style={{ color: 'var(--text-secondary)' }}>Tasks</Link>
             <Link to="/analytics" className="text-sm" style={{ color: 'var(--text-secondary)' }}>Analytics</Link>
+            <Link to="/pomodoro/sessions" className="text-sm" style={{ color: 'var(--text-secondary)' }}>Sessions</Link>
+            <Link to="/ai/create" className="text-sm" style={{ color: 'var(--text-secondary)' }}>AI</Link>
           </nav>
         </div>
 

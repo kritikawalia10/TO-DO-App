@@ -17,7 +17,7 @@ const init = () => {
   ensureDbDir();
   const adapter = new FileSync(DB_PATH);
   db = low(adapter);
-  db.defaults({ users: [], tasks: [], notifications: [] }).write();
+  db.defaults({ users: [], tasks: [], notifications: [], pomodoroSessions: [] }).write();
 };
 
 const getUserByEmail = (email) => db.get('users').find({ email }).value();
@@ -65,6 +65,19 @@ const createNotification = (payload) => {
   const data = { id, ...payload, read: false, createdAt: new Date().toISOString() };
   db.get('notifications').push(data).write();
   return data;
+};
+
+const createPomodoroSession = (payload) => {
+  const id = randomUUID();
+  const data = { id, ...payload, createdAt: new Date().toISOString() };
+  db.get('pomodoroSessions').push(data).write();
+  return data;
+};
+
+const getPomodoroSessions = ({ userId } = {}) => {
+  let coll = db.get('pomodoroSessions');
+  if (userId) coll = coll.filter({ userId });
+  return coll.orderBy(['createdAt'], ['desc']).value();
 };
 
 const getNotifications = (userId) => db.get('notifications').filter({ user: userId }).orderBy(['createdAt'], ['desc']).value();
