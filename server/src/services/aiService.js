@@ -3,17 +3,20 @@ const OpenAI = require('openai');
 let client = null;
 if (process.env.OPENAI_API_KEY) {
   try {
-    const isGroq = process.env.OPENAI_API_KEY.startsWith('gsk_');
+    const key = process.env.OPENAI_API_KEY.trim();
+    const isGroq = key.startsWith('gsk_');
     const baseURL = isGroq ? 'https://api.groq.com/openai/v1' : undefined;
-    console.log('AI Service Init - isGroq:', isGroq, 'baseURL:', baseURL);
+    console.log('AI Service Init - Key Starts With:', key.substring(0, 5), 'isGroq:', isGroq, 'baseURL:', baseURL);
     client = new OpenAI({ 
-      apiKey: process.env.OPENAI_API_KEY,
+      apiKey: key,
       baseURL: baseURL
     });
   } catch (err) {
     console.error('AI Service Init Error:', err);
     client = null;
   }
+} else {
+  console.log('AI Service Init - No OPENAI_API_KEY found in process.env');
 }
 
 /**
