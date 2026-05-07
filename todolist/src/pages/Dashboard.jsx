@@ -58,8 +58,6 @@ export default function Dashboard() {
   const goToday = () => navigate('/tasks', { state: { filter: 'today' } });
   const goWeek = () => navigate('/tasks', { state: { filter: 'week' } });
   const goNewTask = () => navigate('/tasks', { state: { openNew: true } });
-  const goStartFocus = () => navigate('/pomodoro');
-  const goFocusSettings = () => navigate('/analytics');
 
   const cards = [
     { id: 'total', title: 'Total Tasks', value: stats.total, icon: FaTasks, gradient: 'from-purple-500 to-indigo-500' },
@@ -73,9 +71,9 @@ export default function Dashboard() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6">
         <h1 className="text-2xl sm:text-3xl font-bold" style={{ color: 'var(--text)' }}>Dashboard</h1>
         <div className="flex flex-wrap items-center gap-2 mt-4 sm:mt-0">
-          <button onClick={goToday} className="btn btn-ghost btn-sm sm:btn-md">Today</button>
-          <button onClick={goWeek} className="btn btn-ghost btn-sm sm:btn-md">This Week</button>
-          <button onClick={goNewTask} className="btn btn-primary btn-sm sm:btn-md">New Task</button>
+          <button onClick={goToday} className="btn-black">Today</button>
+          <button onClick={goWeek} className="btn-black">This Week</button>
+          <button onClick={goNewTask} className="btn-black">New Task</button>
         </div>
       </div>
 
@@ -90,8 +88,8 @@ export default function Dashboard() {
                     <div className="text-sm" style={{ color: 'var(--muted)' }}>{s.title}</div>
                     <div className="text-2xl font-semibold mt-1" style={{ color: 'var(--text)' }}>{s.value}</div>
                   </div>
-                  <div className="w-12 h-12 rounded-lg bg-gradient-to-br" style={{ background: `linear-gradient(90deg, ${'var(--primary-start)'}, ${'var(--primary-end)'})` }}>
-                    <div className="flex items-center justify-center h-full"><Icon className="text-white text-xl" /></div>
+                  <div className="w-12 h-12 rounded-2xl bg-white/10 flex items-center justify-center border border-white/10 shadow-lg group-hover:border-purple-500/50 transition-all duration-300">
+                    <Icon className="text-purple-400 text-xl group-hover:scale-110 transition-transform" />
                   </div>
                 </div>
               </div>
@@ -107,20 +105,31 @@ export default function Dashboard() {
             <p className="text-sm" style={{ color: 'var(--muted)' }}>No recent tasks.</p>
           ) : (
             <div className="space-y-3">
-              {tasks.slice(0, 6).map(t => (
-                <div key={t.id || t._id} className="p-3 rounded-lg flex items-center justify-between hover:bg-white/5 transition border border-transparent hover:border-white/10">
-                  <div>
-                    <div className="text-sm" style={{ color: 'var(--text)' }}>{t.title}</div>
-                    <div className="text-xs" style={{ color: 'var(--muted)' }}>Due: {t.dueDate ? new Date(t.dueDate).toLocaleString() : '—'}</div>
+              {tasks.slice(0, 6).map((t, i) => (
+                <motion.div 
+                  key={t.id || t._id} 
+                  initial={{ opacity: 0, x: -20 }} 
+                  animate={{ opacity: 1, x: 0 }} 
+                  transition={{ delay: i * 0.1 }}
+                  className="p-4 rounded-xl flex items-center justify-between bg-white text-gray-900 shadow-md hover:shadow-xl hover:scale-[1.02] transition-all cursor-pointer group"
+                >
+                  <div className="flex items-center gap-4">
+                    <div className="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 font-bold group-hover:bg-purple-600 group-hover:text-white transition-colors">
+                      {t.title ? t.title[0].toUpperCase() : 'T'}
+                    </div>
+                    <div>
+                      <div className="font-semibold">{t.title}</div>
+                      <div className="text-xs text-gray-500">Due: {t.dueDate ? new Date(t.dueDate).toLocaleDateString() : '—'}</div>
+                    </div>
                   </div>
                   <div>
                     {t.status === 'done' || t.completed ? (
-                      <span className="tag-done">Done</span>
+                      <span className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-bold uppercase tracking-wider">Done</span>
                     ) : (
-                      <span className="tag-pending">Pending</span>
+                      <span className="px-3 py-1 bg-orange-100 text-orange-700 rounded-full text-xs font-bold uppercase tracking-wider">Pending</span>
                     )}
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
           )}
@@ -129,9 +138,9 @@ export default function Dashboard() {
         <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="card p-6">
           <h2 className="text-xl font-semibold mb-4" style={{ color: 'var(--text)' }}>Focus</h2>
           <p className="text-sm" style={{ color: 'var(--muted)' }}>Start a Pomodoro session to boost your productivity.</p>
-            <div className="mt-4 flex gap-2">
-            <button onClick={goStartFocus} className="btn btn-primary">Start</button>
-            <button onClick={goFocusSettings} className="btn btn-ghost">Settings</button>
+            <div className="mt-6 flex gap-3">
+            <button onClick={() => navigate('/pomodoro')} className="btn-black flex-1">Start</button>
+            <button onClick={() => navigate('/pomodoro')} className="btn-black flex-1">Settings</button>
           </div>
         </motion.div>
       </div>

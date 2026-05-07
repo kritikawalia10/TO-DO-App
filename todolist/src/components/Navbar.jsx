@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import client from '../api/client';
-import { FiBell, FiMenu, FiX } from 'react-icons/fi';
+import { FiBell, FiMenu, FiX, FiSun, FiMoon } from 'react-icons/fi';
 import { initSocket, getSocket } from '../lib/socket';
 
 export default function Navbar(){
@@ -12,6 +12,7 @@ export default function Navbar(){
   const [open, setOpen] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
+  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'dark');
   const ref = useRef();
 
   const handleLogout = () => { logout(); navigate('/login'); };
@@ -23,6 +24,11 @@ export default function Navbar(){
       setNotifications(res.data || []);
     } catch (e) { console.warn('Notif load', e); }
   };
+
+  useEffect(() => {
+    document.documentElement.className = theme === 'light' ? 'light-theme' : '';
+    localStorage.setItem('theme', theme);
+  }, [theme]);
 
   useEffect(() => {
     if (token) {
@@ -63,7 +69,7 @@ export default function Navbar(){
     <header className="sticky top-0 z-30 navbar page-fade shadow-sm relative" style={{ borderBottom: '1px solid var(--border)' }} ref={ref}>
       <div className="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
         <div className="flex items-center gap-2 md:gap-4">
-          <button onClick={() => setShowMobileMenu(!showMobileMenu)} className="md:hidden p-2 text-white/80 hover:bg-white/5 rounded-lg">
+          <button onClick={(e) => { e.stopPropagation(); setShowMobileMenu(!showMobileMenu); }} className="md:hidden p-2 text-white/80 hover:bg-white/5 rounded-lg">
             {showMobileMenu ? <FiX size={24} /> : <FiMenu size={24} />}
           </button>
           <Link to="/" className="font-bold text-lg" style={{ color: 'var(--text)' }}>TaskManager</Link>
@@ -73,6 +79,9 @@ export default function Navbar(){
             <Link to="/pomodoro/sessions" className="text-sm" style={{ color: 'var(--text-secondary)' }}>Sessions</Link>
             <Link to="/ai/create" className="text-sm" style={{ color: 'var(--text-secondary)' }}>AI</Link>
           </nav>
+          <button onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')} className="p-2 text-white/80 hover:bg-white/5 rounded-lg ml-2">
+            {theme === 'dark' ? <FiSun size={18} /> : <FiMoon size={18} />}
+          </button>
         </div>
 
           <div className="flex items-center gap-4 relative">
@@ -139,17 +148,11 @@ export default function Navbar(){
       
       {/* Mobile Menu Overlay */}
       {showMobileMenu && (
-        <div className="md:hidden absolute top-full left-0 w-full bg-[#0F2A5A] border-t border-white/10 py-4 px-6 flex flex-col gap-2 z-50 shadow-2xl">
-          <Link to="/tasks" onClick={() => setShowMobileMenu(false)} className="text-lg font-medium text-white/90 py-2 border-b border-white/5">Tasks</Link>
-          <Link to="/analytics" onClick={() => setShowMobileMenu(false)} className="text-lg font-medium text-white/90 py-2 border-b border-white/5">Analytics</Link>
-          <Link to="/pomodoro/sessions" onClick={() => setShowMobileMenu(false)} className="text-lg font-medium text-white/90 py-2 border-b border-white/5">Sessions</Link>
-          <Link to="/ai/create" onClick={() => setShowMobileMenu(false)} className="text-lg font-medium text-white/90 py-2 border-b border-white/5">AI Quick Create</Link>
-          {!user && (
-            <div className="flex flex-col gap-3 mt-4">
-              <Link to="/login" onClick={() => setShowMobileMenu(false)} className="btn btn-ghost w-full">Login</Link>
-              <Link to="/register" onClick={() => setShowMobileMenu(false)} className="btn btn-primary w-full">Register</Link>
-            </div>
-          )}
+        <div className="md:hidden absolute top-[72px] left-0 w-full bg-[#09090b] border-b border-white/10 flex flex-col z-[100] shadow-2xl overflow-visible" onClick={(e) => e.stopPropagation()}>
+          <Link to="/tasks" onClick={() => setShowMobileMenu(false)} className="px-6 py-4 text-lg font-medium text-white border-b border-white/5 active:bg-white/5">Tasks</Link>
+          <Link to="/analytics" onClick={() => setShowMobileMenu(false)} className="px-6 py-4 text-lg font-medium text-white border-b border-white/5 active:bg-white/5">Analytics</Link>
+          <Link to="/pomodoro/sessions" onClick={() => setShowMobileMenu(false)} className="px-6 py-4 text-lg font-medium text-white border-b border-white/5 active:bg-white/5">Sessions</Link>
+          <Link to="/ai/create" onClick={() => setShowMobileMenu(false)} className="px-6 py-4 text-lg font-medium text-white active:bg-white/5">AI Quick Create</Link>
         </div>
       )}
     </header>
