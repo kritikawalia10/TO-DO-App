@@ -4,6 +4,7 @@ import { FaTasks, FaCheckCircle, FaClock, FaPercent } from 'react-icons/fa';
 import client from '../api/client';
 import { AuthContext } from '../context/AuthContext';
 import { initSocket, getSocket } from '../lib/socket';
+import { useNavigate } from 'react-router-dom';
 
 const cardVariants = {
   hidden: { opacity: 0, y: 8 },
@@ -52,6 +53,14 @@ export default function Dashboard() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token]);
 
+  const navigate = useNavigate();
+
+  const goToday = () => navigate('/tasks', { state: { filter: 'today' } });
+  const goWeek = () => navigate('/tasks', { state: { filter: 'week' } });
+  const goNewTask = () => navigate('/tasks', { state: { openNew: true } });
+  const goStartFocus = () => navigate('/pomodoro');
+  const goFocusSettings = () => navigate('/analytics');
+
   const cards = [
     { id: 'total', title: 'Total Tasks', value: stats.total, icon: FaTasks, gradient: 'from-purple-500 to-indigo-500' },
     { id: 'completed', title: 'Completed', value: stats.completed, icon: FaCheckCircle, gradient: 'from-green-400 to-teal-400' },
@@ -64,9 +73,9 @@ export default function Dashboard() {
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-3xl font-bold" style={{ color: 'var(--text)' }}>Dashboard</h1>
         <div className="flex items-center gap-3">
-          <button className="btn btn-ghost">Today</button>
-          <button className="btn btn-ghost">This Week</button>
-          <button className="btn btn-primary">New Task</button>
+          <button onClick={goToday} className="btn btn-ghost">Today</button>
+          <button onClick={goWeek} className="btn btn-ghost">This Week</button>
+          <button onClick={goNewTask} className="btn btn-primary">New Task</button>
         </div>
       </div>
 
@@ -120,9 +129,9 @@ export default function Dashboard() {
         <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="card p-6">
           <h2 className="text-xl font-semibold mb-4" style={{ color: 'var(--text)' }}>Focus</h2>
           <p className="text-sm" style={{ color: 'var(--muted)' }}>Start a Pomodoro session to boost your productivity.</p>
-          <div className="mt-4 flex gap-2">
-            <button className="btn btn-primary">Start</button>
-            <button className="btn btn-ghost">Settings</button>
+            <div className="mt-4 flex gap-2">
+            <button onClick={goStartFocus} className="btn btn-primary">Start</button>
+            <button onClick={goFocusSettings} className="btn btn-ghost">Settings</button>
           </div>
         </motion.div>
       </div>

@@ -25,9 +25,9 @@ const register = async ({ name, email, password }) => {
 const login = async ({ email, password }) => {
   if (dbConfig.lowdb) {
     const user = dbConfig.lowdb.getUserByEmail(email);
-    if (!user) throw new Error('Invalid credentials');
+    if (!user) { const err = new Error('Invalid credentials'); err.status = 401; throw err; }
     const match = await bcrypt.compare(password, user.password);
-    if (!match) throw new Error('Invalid credentials');
+    if (!match) { const err = new Error('Invalid credentials'); err.status = 401; throw err; }
     const token = jwt.sign({ id: user.id, role: user.role }, process.env.JWT_SECRET || 'secret', { expiresIn: '7d' });
     const { password: _p, ...safe } = user;
     return { user: safe, token };
@@ -35,9 +35,9 @@ const login = async ({ email, password }) => {
 
   const User = require('../models/User');
   const user = await User.findOne({ email });
-  if (!user) throw new Error('Invalid credentials');
+  if (!user) { const err = new Error('Invalid credentials'); err.status = 401; throw err; }
   const match = await bcrypt.compare(password, user.password);
-  if (!match) throw new Error('Invalid credentials');
+  if (!match) { const err = new Error('Invalid credentials'); err.status = 401; throw err; }
   const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET || 'secret', { expiresIn: '7d' });
   const safeUser = user.toObject();
   delete safeUser.password;
