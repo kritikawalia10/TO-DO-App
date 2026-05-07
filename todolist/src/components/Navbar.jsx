@@ -60,7 +60,7 @@ export default function Navbar(){
   };
 
   return (
-    <header className="sticky top-0 z-30 navbar page-fade shadow-sm" style={{ borderBottom: '1px solid var(--border)' }}>
+    <header className="sticky top-0 z-30 navbar page-fade shadow-sm" style={{ borderBottom: '1px solid var(--border)' }} ref={ref}>
       <div className="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
         <div className="flex items-center gap-2 md:gap-4">
           <button onClick={() => setShowMobileMenu(!showMobileMenu)} className="md:hidden p-2 text-white/80 hover:bg-white/5 rounded-lg">
@@ -75,7 +75,7 @@ export default function Navbar(){
           </nav>
         </div>
 
-          <div className="flex items-center gap-4 relative" ref={ref}>
+          <div className="flex items-center gap-4 relative">
           <div className="relative">
             <button onClick={() => setOpen(v => !v)} className="p-2 rounded-full bg-transparent hover:bg-white/4 transition flex items-center" aria-label="notifications">
               <FiBell className="text-lg" style={{ color: 'var(--text-secondary)' }} />
