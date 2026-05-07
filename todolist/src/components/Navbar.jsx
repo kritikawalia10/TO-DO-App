@@ -60,7 +60,7 @@ export default function Navbar(){
   };
 
   return (
-    <header className="sticky top-0 z-30 navbar page-fade shadow-sm" style={{ borderBottom: '1px solid var(--border)' }} ref={ref}>
+    <header className="sticky top-0 z-30 navbar page-fade shadow-sm relative" style={{ borderBottom: '1px solid var(--border)' }} ref={ref}>
       <div className="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
         <div className="flex items-center gap-2 md:gap-4">
           <button onClick={() => setShowMobileMenu(!showMobileMenu)} className="md:hidden p-2 text-white/80 hover:bg-white/5 rounded-lg">
@@ -139,7 +139,7 @@ export default function Navbar(){
       
       {/* Mobile Menu Overlay */}
       {showMobileMenu && (
-        <div className="md:hidden absolute top-full left-0 w-full glass shadow-xl border-t border-white/5 py-4 px-6 flex flex-col gap-4 animate-in fade-in slide-in-from-top-4 duration-200">
+        <div className="md:hidden absolute top-full left-0 w-full bg-[#0F2A5A] border-t border-white/10 py-4 px-6 flex flex-col gap-2 z-50 shadow-2xl">
           <Link to="/tasks" onClick={() => setShowMobileMenu(false)} className="text-lg font-medium text-white/90 py-2 border-b border-white/5">Tasks</Link>
           <Link to="/analytics" onClick={() => setShowMobileMenu(false)} className="text-lg font-medium text-white/90 py-2 border-b border-white/5">Analytics</Link>
           <Link to="/pomodoro/sessions" onClick={() => setShowMobileMenu(false)} className="text-lg font-medium text-white/90 py-2 border-b border-white/5">Sessions</Link>
