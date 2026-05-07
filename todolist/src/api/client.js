@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE = import.meta.env.VITE_API_BASE || 'https://to-do-app-8iq6.onrender.com/api';
+const API_BASE = import.meta.env.VITE_API_BASE || 'https://to-do-app-1-syp2.onrender.com/api';
 
 const client = axios.create({ baseURL: API_BASE, withCredentials: false });
 
