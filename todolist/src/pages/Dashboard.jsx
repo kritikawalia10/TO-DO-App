@@ -70,12 +70,12 @@ export default function Dashboard() {
 
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="p-6 max-w-6xl mx-auto page-fade">
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-3xl font-bold" style={{ color: 'var(--text)' }}>Dashboard</h1>
-        <div className="flex items-center gap-3">
-          <button onClick={goToday} className="btn btn-ghost">Today</button>
-          <button onClick={goWeek} className="btn btn-ghost">This Week</button>
-          <button onClick={goNewTask} className="btn btn-primary">New Task</button>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6">
+        <h1 className="text-2xl sm:text-3xl font-bold" style={{ color: 'var(--text)' }}>Dashboard</h1>
+        <div className="flex flex-wrap items-center gap-2 mt-4 sm:mt-0">
+          <button onClick={goToday} className="btn btn-ghost btn-sm sm:btn-md">Today</button>
+          <button onClick={goWeek} className="btn btn-ghost btn-sm sm:btn-md">This Week</button>
+          <button onClick={goNewTask} className="btn btn-primary btn-sm sm:btn-md">New Task</button>
         </div>
       </div>
 

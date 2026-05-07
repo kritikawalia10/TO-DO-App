@@ -105,12 +105,12 @@ export default function Navbar(){
           </div>
 
           {user ? (
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 md:gap-3">
               <div className="text-sm text-white/80 hidden sm:block">{user.name || user.email}</div>
-              <button onClick={() => setShowProfile(v => !v)} className="p-0 bg-transparent border-0">
-                <img src={`https://ui-avatars.com/api/?name=${encodeURIComponent(user.name || user.email)}&background=6366F1&color=fff`} alt="avatar" className="w-9 h-9 rounded-full border-2 border-white/10" />
+              <button onClick={() => setShowProfile(v => !v)} className="p-0 bg-transparent border-0 focus:outline-none">
+                <img src={`https://ui-avatars.com/api/?name=${encodeURIComponent(user.name || user.email)}&background=6366F1&color=fff`} alt="avatar" className="w-8 h-8 md:w-9 md:h-9 rounded-full border-2 border-white/10" />
               </button>
-              <button onClick={handleLogout} className="text-sm text-white/80">Logout</button>
+              <button onClick={handleLogout} className="text-sm text-white/80 hidden md:block">Logout</button>
 
               {showProfile && (
                 <div className="profile-panel" role="dialog" aria-label="Profile panel">
