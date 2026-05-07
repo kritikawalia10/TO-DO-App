@@ -108,7 +108,7 @@ export default function Dashboard() {
           ) : (
             <div className="space-y-3">
               {tasks.slice(0, 6).map(t => (
-                <div key={t.id || t._id} className="p-3 rounded-lg flex items-center justify-between hover:bg-gray-50 transition">
+                <div key={t.id || t._id} className="p-3 rounded-lg flex items-center justify-between hover:bg-white/5 transition border border-transparent hover:border-white/10">
                   <div>
                     <div className="text-sm" style={{ color: 'var(--text)' }}>{t.title}</div>
                     <div className="text-xs" style={{ color: 'var(--muted)' }}>Due: {t.dueDate ? new Date(t.dueDate).toLocaleString() : '—'}</div>

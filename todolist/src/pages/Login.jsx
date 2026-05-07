@@ -22,12 +22,12 @@ export default function Login() {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-20 p-6 bg-white rounded shadow">
-      <h2 className="text-xl font-semibold mb-4">Sign In</h2>
+    <div className="max-w-md mx-auto mt-20 p-8 card page-fade">
+      <h2 className="text-2xl font-bold mb-6 text-center" style={{ color: 'var(--text)' }}>Sign In</h2>
       {error && <div className="text-red-600 mb-2">{error}</div>}
       <form onSubmit={handleSubmit} className="space-y-4">
-        <input className="w-full p-2 border rounded text-white placeholder-gray-300 bg-transparent" placeholder="Email" value={email} onChange={(e)=>setEmail(e.target.value)} />
-        <input type="password" className="w-full p-2 border rounded text-white placeholder-gray-300 bg-transparent" placeholder="Password" value={password} onChange={(e)=>setPassword(e.target.value)} />
+        <input className="w-full p-3 border rounded bg-white/5 border-white/10 text-white placeholder-white/30 focus:outline-none focus:border-purple-500 transition" placeholder="Email" value={email} onChange={(e)=>setEmail(e.target.value)} />
+        <input type="password" className="w-full p-3 border rounded bg-white/5 border-white/10 text-white placeholder-white/30 focus:outline-none focus:border-purple-500 transition" placeholder="Password" value={password} onChange={(e)=>setPassword(e.target.value)} />
         <button className="w-full btn btn-primary">Sign in</button>
       </form>
     </div>
