@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import client from '../api/client';
-import { FiBell } from 'react-icons/fi';
+import { FiBell, FiMenu, FiX } from 'react-icons/fi';
 import { initSocket, getSocket } from '../lib/socket';
 
 export default function Navbar(){
@@ -11,6 +11,7 @@ export default function Navbar(){
   const [notifications, setNotifications] = useState([]);
   const [open, setOpen] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
   const ref = useRef();
 
   const handleLogout = () => { logout(); navigate('/login'); };
@@ -42,6 +43,7 @@ export default function Navbar(){
       if (ref.current && !ref.current.contains(e.target)) {
         setOpen(false);
         setShowProfile(false);
+        setShowMobileMenu(false);
       }
     };
     window.addEventListener('click', onClick);
@@ -60,9 +62,12 @@ export default function Navbar(){
   return (
     <header className="sticky top-0 z-30 navbar page-fade shadow-sm" style={{ borderBottom: '1px solid var(--border)' }}>
       <div className="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2 md:gap-4">
+          <button onClick={() => setShowMobileMenu(!showMobileMenu)} className="md:hidden p-2 text-white/80 hover:bg-white/5 rounded-lg">
+            {showMobileMenu ? <FiX size={24} /> : <FiMenu size={24} />}
+          </button>
           <Link to="/" className="font-bold text-lg" style={{ color: 'var(--text)' }}>TaskManager</Link>
-            <nav className="hidden md:flex items-center gap-4">
+          <nav className="hidden md:flex items-center gap-4">
             <Link to="/tasks" className="text-sm" style={{ color: 'var(--text-secondary)' }}>Tasks</Link>
             <Link to="/analytics" className="text-sm" style={{ color: 'var(--text-secondary)' }}>Analytics</Link>
             <Link to="/pomodoro/sessions" className="text-sm" style={{ color: 'var(--text-secondary)' }}>Sessions</Link>
@@ -131,6 +136,22 @@ export default function Navbar(){
           )}
         </div>
       </div>
+      
+      {/* Mobile Menu Overlay */}
+      {showMobileMenu && (
+        <div className="md:hidden absolute top-full left-0 w-full glass shadow-xl border-t border-white/5 py-4 px-6 flex flex-col gap-4 animate-in fade-in slide-in-from-top-4 duration-200">
+          <Link to="/tasks" onClick={() => setShowMobileMenu(false)} className="text-lg font-medium text-white/90 py-2 border-b border-white/5">Tasks</Link>
+          <Link to="/analytics" onClick={() => setShowMobileMenu(false)} className="text-lg font-medium text-white/90 py-2 border-b border-white/5">Analytics</Link>
+          <Link to="/pomodoro/sessions" onClick={() => setShowMobileMenu(false)} className="text-lg font-medium text-white/90 py-2 border-b border-white/5">Sessions</Link>
+          <Link to="/ai/create" onClick={() => setShowMobileMenu(false)} className="text-lg font-medium text-white/90 py-2 border-b border-white/5">AI Quick Create</Link>
+          {!user && (
+            <div className="flex flex-col gap-3 mt-4">
+              <Link to="/login" onClick={() => setShowMobileMenu(false)} className="btn btn-ghost w-full">Login</Link>
+              <Link to="/register" onClick={() => setShowMobileMenu(false)} className="btn btn-primary w-full">Register</Link>
+            </div>
+          )}
+        </div>
+      )}
     </header>
   );
 }
