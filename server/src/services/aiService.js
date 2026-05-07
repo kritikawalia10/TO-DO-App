@@ -4,11 +4,14 @@ let client = null;
 if (process.env.OPENAI_API_KEY) {
   try {
     const isGroq = process.env.OPENAI_API_KEY.startsWith('gsk_');
+    const baseURL = isGroq ? 'https://api.groq.com/openai/v1' : undefined;
+    console.log('AI Service Init - isGroq:', isGroq, 'baseURL:', baseURL);
     client = new OpenAI({ 
       apiKey: process.env.OPENAI_API_KEY,
-      baseURL: isGroq ? 'https://api.groq.com/openai/v1' : undefined
+      baseURL: baseURL
     });
   } catch (err) {
+    console.error('AI Service Init Error:', err);
     client = null;
   }
 }
