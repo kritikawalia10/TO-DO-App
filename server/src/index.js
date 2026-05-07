@@ -49,7 +49,7 @@ const checkDueTasks = async () => {
         if (hours <= thresholdHours) {
           // check existing notification for that threshold
           let already = false;
-          if (dbConfig.lowdb) {
+          if (dbConfig.getIsLowDB()) {
             const notifs = dbConfig.lowdb.getNotifications(userId) || [];
             already = notifs.some(n => n.type === 'due_soon' && n.data && (n.data.taskId === (task.id || task._id)) && n.data.threshold === thresholdHours);
           } else if (NotificationModel) {
@@ -61,7 +61,7 @@ const checkDueTasks = async () => {
           const message = `Task \"${task.title}\" is due in ${Math.ceil(hours)} hour(s)`;
           const payload = { user: userId, type: 'due_soon', message, data: { taskId: task._id || task.id, threshold: thresholdHours } };
 
-          if (dbConfig.lowdb) dbConfig.lowdb.createNotification(payload);
+          if (dbConfig.getIsLowDB()) dbConfig.lowdb.createNotification(payload);
           else if (NotificationModel) await NotificationModel.create(payload);
 
           // emit via socket to the user room

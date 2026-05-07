@@ -14,7 +14,7 @@ const computePriority = (dueDate) => {
 const createTask = async (payload, userId) => {
   if (payload.dueDate && !payload.priority) payload.priority = computePriority(payload.dueDate);
   payload.createdBy = userId;
-  if (dbConfig.lowdb) {
+  if (dbConfig.getIsLowDB()) {
     return dbConfig.lowdb.createTask(payload);
   }
   const Task = require('../models/Task');
@@ -24,7 +24,7 @@ const createTask = async (payload, userId) => {
 
 const updateTask = async (taskId, payload) => {
   if (payload.dueDate && !payload.priority) payload.priority = computePriority(payload.dueDate);
-  if (dbConfig.lowdb) {
+  if (dbConfig.getIsLowDB()) {
     return dbConfig.lowdb.updateTask(taskId, payload);
   }
   const Task = require('../models/Task');
@@ -33,7 +33,7 @@ const updateTask = async (taskId, payload) => {
 };
 
 const deleteTask = async (taskId) => {
-  if (dbConfig.lowdb) return dbConfig.lowdb.deleteTask(taskId);
+  if (dbConfig.getIsLowDB()) return dbConfig.lowdb.deleteTask(taskId);
   const Task = require('../models/Task');
   return await Task.findByIdAndDelete(taskId);
 };
@@ -46,7 +46,7 @@ const getTasks = async ({ page = 1, limit = 20, search, tags, sortBy = 'createdA
   if (priority) query.priority = priority;
 
   // Pass userId to lowdb adapter so it can filter tasks by createdBy
-  if (dbConfig.lowdb) return dbConfig.lowdb.getTasks({ page, limit, search, tags, sortBy, status, priority, userId });
+  if (dbConfig.getIsLowDB()) return dbConfig.lowdb.getTasks({ page, limit, search, tags, sortBy, status, priority, userId });
   const skip = (page - 1) * limit;
   const Task = require('../models/Task');
   if (userId) query.createdBy = userId;
@@ -56,7 +56,7 @@ const getTasks = async ({ page = 1, limit = 20, search, tags, sortBy = 'createdA
 };
 
 const getTaskById = async (id) => {
-  if (dbConfig.lowdb) return dbConfig.lowdb.getTaskById(id);
+  if (dbConfig.getIsLowDB()) return dbConfig.lowdb.getTaskById(id);
   const Task = require('../models/Task');
   return await Task.findById(id);
 };
